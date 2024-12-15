@@ -22,14 +22,7 @@ def add_cv(request):
         form = CVForm()
     return render(request, 'cv/add_cv.html', {'form': form})
 
-def generate_pdf(request, cv_id):
-    cv = CV.objects.get(id=cv_id)
-    html_string = render_to_string('cv_template.html', {'cv': cv})
-    html = HTML(string=html_string)
-    pdf = html.write_pdf()
-    response = HttpResponse(pdf, content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="cv_{cv.etudiant.nom}.pdf"'
-    return response
+
 
 def send_email(request, cv_id):
     cv = CV.objects.get(id=cv_id)
@@ -62,17 +55,25 @@ def send_cv_email_view(request, cv_id):
         else:
             return JsonResponse({'status': 'error', 'message': 'Adresse email manquante.'})
 
-from django.http import HttpResponse
+
+
+from django.http import HttpResponse, Http404
 from weasyprint import HTML
 from django.template.loader import render_to_string
 from .models import CV
 
 def generate_pdf(request, cv_id):
-    cv = CV.objects.get(id=cv_id)
+    try:
+        cv = CV.objects.get(id=cv_id)
+    except CV.DoesNotExist:
+        raise Http404("CV matching query does not exist.")
+    
     html_string = render_to_string('cv/cv_template.html', {'cv': cv})
     html = HTML(string=html_string)
     pdf_file = html.write_pdf()
     response = HttpResponse(pdf_file, content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="cv_{cv.user.username}.pdf"'
     return response
+
+
 
