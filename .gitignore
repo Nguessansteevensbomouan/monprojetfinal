@@ -1,0 +1,25 @@
+ # Fichiers système
+*.DS_Store
+*.log
+*.pot
+*.pyc
+*.pyo
+*.swp
+*.swo
+*.~*
+
+
+
+# Fichiers de configuration spécifiques
+*.sqlite3
+db.sqlite3
+__pycache__/
+
+# Outils d'éditeur
+.idea/
+.vscode/
+
+# Dossiers générés
+staticfiles/
+media/
+
