@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ cv.titre }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ cv.titre }}</h1>
+    <p>{{ cv.description }}</p>
+    <div class="section">
+        <h2>Expériences</h2>
+        {% for experience in experiences %}
+        <p>{{ experience.poste }} chez {{ experience.entreprise }} ({{ experience.date_debut }} - {{ experience.date_fin }})</p>
+        {% endfor %}
+    </div>
+    <div class="section">
+        <h2>Formations</h2>
+        {% for formation in formations %}
+        <p>{{ formation.diplome }} à {{ formation.etablissement }} ({{ formation.date_debut }} - {{ formation.date_fin }})</p>
+        {% endfor %}
+    </div>
+    <div class="section">
+        <h2>Langues</h2>
+        {% for langue in langues %}
+        <p>{{ langue.libelle }} : {{ langue.niveau }}</p>
+        {% endfor %}
+    </div>
+    <div class="section">
+        <h2>Compétences</h2>
+        {% for competence in competences %}
+        <p>{{ competence.libelle }} ({{ competence.niveau }})</p>
+        {% endfor %}
+    </div>
+    <div class="section">
+        <h2>Projets</h2>
+        {% for projet in projets %}
+        <p>{{ projet.titre }} : {{ projet.description }} ({{ projet.date_debut }} - {{ projet.date_fin }})</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

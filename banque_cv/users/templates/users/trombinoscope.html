@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Trombinoscope</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        .user-card {
+            display: inline-block;
+            width: 200px;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .user-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .pagination a {
+            margin: 0 5px;
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Trombinoscope</h1>
+        {% for user in page_obj %}
+        <div class="user-card">
+            <img src="{{ user.photo.url }}" alt="Photo de {{ user.username }}">
+            <p>{{ user.nom }} {{ user.prenom }}</p>
+        </div>
+        {% endfor %}
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">Précédent</a>
+            {% endif %}
+            Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Suivant</a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
